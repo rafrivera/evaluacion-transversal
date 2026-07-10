@@ -29,22 +29,25 @@ def leer_opcion():
         return op
 ########################################
 
-# OP 1 ################################# si es posible agregar deteccion de planes que no existen
+# OP 1 #################################
 def cupos_tipo(tipo):
-    planesTipo = []
-    
-    for i in planes:
-        if planes[i][1] == tipo:
-            planesTipo.append(i)
-            #print(planesTipo)
-    
-    totalCupos = 0
-    
-    for j in planesTipo:
-        totalCupos += inscripciones[j][1]
-        #print(totalCupos)
-    
-    print(f'Existen {totalCupos} cupos en el plan {tipo}')
+    if tipo == 'mensual' or tipo == 'trimestral' or tipo == 'anual':
+        planesTipo = []
+        
+        for i in planes:
+            if planes[i][1] == tipo:
+                planesTipo.append(i)
+                #print(planesTipo)
+        
+        totalCupos = 0
+        
+        for j in planesTipo:
+            totalCupos += inscripciones[j][1]
+            #print(totalCupos)
+        
+        print(f'El total de cupos disponibles es: {totalCupos}')
+    else:
+        print('Plan no encontrado')
 ########################################
 
 # OP 2 #################################
@@ -58,8 +61,7 @@ def busqueda_precio(p_min, p_max):
                 #print(planesRango)
                 
         if planesRango != []:
-            for j in sorted(planesRango):
-                print(j)
+            print(f'Los planes encontrados son: {sorted(planesRango)}')
         else:
             print('No hay planes en ese rango de precios')
             
@@ -190,32 +192,31 @@ while True:
             else:
                 if actualizar_precio(codigo, nuevo_precio) == True:
                     print('Precio actualizado')
-                    op_otro = input('¿Desea actualizar otro precio (s/n)?: ').lower()
-                    
-                    if op_otro == 's':
-                        continue
-                    else:
-                        break
-                    
                 else:
                     print('El código no existe')
-                break
+                    
+                op_otro = input('¿Desea actualizar otro precio (s/n)?: ').lower()
+                    
+                if op_otro == 's':
+                    continue
+                else:
+                    break
     elif op == 4:
         hay_False = []
         
-        add_codigo = input('Codigo: ').upper()
+        add_codigo = input('Ingrese codigo del plan: ').upper()
         hay_False.append(val_codigo(add_codigo))
         
-        add_nombre = input('Nombre: ')
+        add_nombre = input('Ingrese nombre del plan: ').capitalize()
         hay_False.append(val_nombre(add_nombre))
         
-        add_tipo = input('Tipo: ').lower()
+        add_tipo = input('Ingrese tipo (mensual/trimestral/anual): ').lower()
         hay_False.append(val_tipo(add_tipo))
         
         # add_duracion ################################
         while True:
             try:
-                add_duracion = int(input('Duración: '))
+                add_duracion = int(input('Ingrese duración (meses): '))
             except ValueError:
                 print('Ingrese un número válido')
                 continue
@@ -223,19 +224,19 @@ while True:
                 hay_False.append(val_duracion(add_duracion))
                 break
         ###############################################
-        add_acceso_piscina = input('Acceso piscina (s/n): ').lower()
+        add_acceso_piscina = input('¿Incluye acceso a piscina? (s/n): ').lower()
         hay_False.append(val_acceso_piscina(add_acceso_piscina))
         
-        add_incluye_clases = input('Incluye clases (s/n): ').lower()
+        add_incluye_clases = input('¿Incluye clases grupales? (s/n): ').lower()
         hay_False.append(val_incluye_clases(add_incluye_clases))
         
-        add_horario = input('Horario: ')
+        add_horario = input('Ingrese horario: ')
         hay_False.append(val_horario(add_horario))
         
         # add_precio ##################################
         while True:
             try:
-                add_precio = int(input('Precio: '))
+                add_precio = int(input('Ingrese precio: '))
             except ValueError:
                 print('Ingrese un precio válido')
                 continue
@@ -247,7 +248,7 @@ while True:
         # add_cupos ###################################
         while True:
             try:
-                add_cupos = int(input('Cupos: '))
+                add_cupos = int(input('Ingrese cupos: '))
             except ValueError:
                 print('Ingrese un número válido')
                 continue
@@ -274,4 +275,6 @@ while True:
             print('Plan eliminado')
         else:
             print('El código no existe') 
-        
+    elif op == 6:
+        print('Programa finalizado')
+        break
