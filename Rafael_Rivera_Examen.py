@@ -68,7 +68,7 @@ def busqueda_precio(p_min, p_max):
 ########################################
 
 # OP 3 #################################
-def buscar_codigo(codigo):
+def buscar_codigo(codigo): # Usada tambien en la opción 5
     if codigo in inscripciones.keys():
         return True
     else:
@@ -132,6 +132,16 @@ def agregar_plan(codigo, nombre, tipo, duracion, acceso_piscina, incluye_clases,
     if codigo not in planes:
         planes[codigo] = [nombre, tipo, duracion, acceso_piscina, incluye_clases, horario]
         inscripciones[codigo] = [precio, cupos]
+        return True
+    else:
+        return False
+########################################
+
+# OP 5 #################################
+def eliminar_plan(codigo):
+    if buscar_codigo(codigo) == True:
+        planes.pop(codigo)
+        inscripciones.pop(codigo)
         return True
     else:
         return False
@@ -249,9 +259,19 @@ while True:
         if False in hay_False:
             print('Error. Registro fallido')
         else:
-            hecho = agregar_plan(add_codigo, add_nombre, add_tipo, add_duracion, add_acceso_piscina, add_incluye_clases, add_horario, add_precio, add_cupos)
+            agregar_hecho = agregar_plan(add_codigo, add_nombre, add_tipo, add_duracion, add_acceso_piscina, add_incluye_clases, add_horario, add_precio, add_cupos)
             
-            if hecho == True:
+            if agregar_hecho == True:
                 print('Plan agregado')
             else:
                 print('El código ya existe')
+    elif op == 5:
+        planEliminar = input('Ingrese el plan a eliminar: ').upper()
+        eliminar_hecho = eliminar_plan(planEliminar)
+        
+        if eliminar_hecho == True:
+            print(planes)
+            print('Plan eliminado')
+        else:
+            print('El código no existe') 
+        
