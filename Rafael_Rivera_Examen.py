@@ -29,6 +29,24 @@ def leer_opcion():
         return None
 ########################################
 
+# OP 1 ################################# si es posible agregar deteccion de planes que no existen
+def cupos_tipo(tipo):
+    planesTipo = []
+    
+    for i in planes:
+        if planes[i][1] == tipo:
+            planesTipo.append(i)
+            #print(planesTipo)
+    
+    totalCupos = 0
+    
+    for j in planesTipo:
+        totalCupos += inscripciones[j][1]
+        #print(totalCupos)
+    
+    print(f'Existen {totalCupos} cupos en el plan {tipo}')
+########################################
+
 while True:
     print('========== MENÚ PRINCIPAL ==========')
     print('1. Cupos por tipo de plan')
@@ -43,3 +61,6 @@ while True:
     
     if op == None:
         continue
+    elif op == 1:
+        tipoPlan = input('Escriba el plan a buscar: ').lower()
+        cupos_tipo(tipoPlan)
