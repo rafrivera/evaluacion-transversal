@@ -81,6 +81,62 @@ def actualizar_precio(codigo, nuevo_precio):
         return False
 ########################################
 
+# OP 4 #################################
+def val_codigo(dato):
+    if dato != '' and dato.strip() != '' and dato not in planes.keys():
+        return True
+    else:
+        return False
+def val_nombre(dato):
+    if dato != '' and dato.strip() != '':
+        return True
+    else:
+        return False
+def val_tipo(dato):
+    if dato == 'mensual' or dato == 'trimestral' or dato == 'anual':
+        return True
+    else:
+        return False
+def val_duracion(dato):
+    if dato > 0:
+        return True
+    else:
+        return False
+def val_acceso_piscina(dato):
+    if dato == 's':
+        return True
+    else:
+        return False
+def val_incluye_clases(dato):
+    if dato == 's':
+        return True
+    else:
+        return False
+def val_horario(dato):
+    if dato != '' and dato.strip() != '':
+        return True
+    else:
+        return False
+def val_precio(dato):
+    if dato > 0:
+        return True
+    else:
+        return False
+def val_cupos(dato):
+    if dato >= 0:
+        return True
+    else:
+        return False
+
+def agregar_plan(codigo, nombre, tipo, duracion, acceso_piscina, incluye_clases, horario, precio, cupos):
+    if codigo not in planes:
+        planes[codigo] = [nombre, tipo, duracion, acceso_piscina, incluye_clases, horario]
+        inscripciones[codigo] = [precio, cupos]
+        return True
+    else:
+        return False
+########################################
+
 while True:
     print('========== MENÚ PRINCIPAL ==========')
     print('1. Cupos por tipo de plan')
@@ -134,3 +190,68 @@ while True:
                 else:
                     print('El código no existe')
                 break
+    elif op == 4:
+        hay_False = []
+        
+        add_codigo = input('Codigo: ').upper()
+        hay_False.append(val_codigo(add_codigo))
+        
+        add_nombre = input('Nombre: ')
+        hay_False.append(val_nombre(add_nombre))
+        
+        add_tipo = input('Tipo: ').lower()
+        hay_False.append(val_tipo(add_tipo))
+        
+        # add_duracion ################################
+        while True:
+            try:
+                add_duracion = int(input('Duración: '))
+            except ValueError:
+                print('Ingrese un número válido')
+                continue
+            else:
+                hay_False.append(val_duracion(add_duracion))
+                break
+        ###############################################
+        add_acceso_piscina = input('Acceso piscina (s/n): ').lower()
+        hay_False.append(val_acceso_piscina(add_acceso_piscina))
+        
+        add_incluye_clases = input('Incluye clases (s/n): ').lower()
+        hay_False.append(val_incluye_clases(add_incluye_clases))
+        
+        add_horario = input('Horario: ')
+        hay_False.append(val_horario(add_horario))
+        
+        # add_precio ##################################
+        while True:
+            try:
+                add_precio = int(input('Precio: '))
+            except ValueError:
+                print('Ingrese un precio válido')
+                continue
+            else:
+                hay_False.append(val_precio(add_precio))
+                break
+        ###############################################
+        
+        # add_cupos ###################################
+        while True:
+            try:
+                add_cupos = int(input('Cupos: '))
+            except ValueError:
+                print('Ingrese un número válido')
+                continue
+            else:
+                hay_False.append(val_cupos(add_cupos))
+                break
+        ###############################################
+        
+        if False in hay_False:
+            print('Error. Registro fallido')
+        else:
+            hecho = agregar_plan(add_codigo, add_nombre, add_tipo, add_duracion, add_acceso_piscina, add_incluye_clases, add_horario, add_precio, add_cupos)
+            
+            if hecho == True:
+                print('Plan agregado')
+            else:
+                print('El código ya existe')
