@@ -124,6 +124,13 @@ while True:
             else:
                 if actualizar_precio(codigo, nuevo_precio) == True:
                     print('Precio actualizado')
+                    op_otro = input('¿Desea actualizar otro precio (s/n)?: ').lower()
+                    
+                    if op_otro == 's':
+                        continue
+                    else:
+                        break
+                    
                 else:
                     print('El código no existe')
                 break
