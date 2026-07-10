@@ -67,6 +67,20 @@ def busqueda_precio(p_min, p_max):
         print('El precio máximo no puede ser menor al precio máximo y ambos tienen que ser mayor o igual que cero')
 ########################################
 
+# OP 3 #################################
+def buscar_codigo(codigo):
+    if codigo in inscripciones.keys():
+        return True
+    else:
+        return False
+def actualizar_precio(codigo, nuevo_precio):
+    if buscar_codigo(codigo) == True:
+        inscripciones[codigo][0] = nuevo_precio
+        return True
+    else:
+        return False
+########################################
+
 while True:
     print('========== MENÚ PRINCIPAL ==========')
     print('1. Cupos por tipo de plan')
@@ -94,4 +108,22 @@ while True:
                 continue
             else:
                 busqueda_precio(p_min, p_max)
+                break
+    elif op == 3:
+        while True:
+            try:
+                codigo = input('Ingrese el plan a actualizar: ').upper()
+                nuevo_precio = int(input('Ingrese el nuevo precio a asignar: '))
+                
+                if nuevo_precio < 0:
+                    raise ValueError
+            except ValueError:
+                print('Ingrese un precio válido')
+                print('-' * 20)
+                continue
+            else:
+                if actualizar_precio(codigo, nuevo_precio) == True:
+                    print('Precio actualizado')
+                else:
+                    print('El código no existe')
                 break
